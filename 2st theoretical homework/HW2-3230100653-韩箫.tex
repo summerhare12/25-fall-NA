@@ -1,0 +1,351 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+\usepackage[backend=bibtex,style=numeric]{biblatex}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+  language=C++,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  numberstyle=\tiny,
+  numbers=left,
+  frame=single,
+  breaklines=true
+}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+\addbibresource{citation.bib}
+
+\begin{document}
+% =================================================
+\title{Numerical Analysis homework 2}
+
+\author{Han Xiao; 3230100653
+  \thanks{Electronic address: \texttt{3230100653@zju.edu.cn}}}
+\affil{(Automation 2302), Zhejiang University }
+
+
+\date{Due time: \today}
+
+\maketitle
+
+
+
+% ============================================
+\section*{I. }
+(Due to the complicated fractions and equations, it's too troublesome to type them in \LaTeX. Therefore, I solve them by hand.)
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{I.jpg}
+  \caption{Problem I}
+  \label{fig:I}
+\end{figure}
+
+
+\section*{II. }
+Refer to the Lagrange formula, the basis  $l_k(x) = \displaystyle\prod_{i=0, i\neq k}^{n}\cfrac{x-x_i}{x_k-x_i}$.
+
+We've been given $(n+1)$ points to construct a polynomial of degree $2n$, also the polynomial needs to be non-negative in the whole real line.
+Therefore, we can use squares of $l_k(x)$ to construct the polynomial:
+\[
+l_k(x) = \displaystyle\prod_{i=0, i\neq k}^{n}\cfrac{(x-x_i)^2}{(x_k-x_i)^2},
+\]
+which still satisfies $l_k(x_i)= 0,\quad i \neq k$ and $l_k(x_k) = 1$, while the degree is $2n$.
+
+So the function we want is
+\[
+p(x) = \sum_{k=0}^{n}f(x_k)l_k(x) = \sum_{k=0}^{n}f(x_k)\displaystyle\prod_{i=0, i\neq k}^{n}\cfrac{(x-x_i)^2}{(x_k-x_i)^2}
+\]
+
+\section*{III. }
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{III-a.jpg}
+  \caption{Problem III-a}
+  \label{fig:III-a}
+\end{figure}
+
+\subsection*{III-b}
+For $t = 0$, we have $f[0,1,\dots,n] = \cfrac{(e-1)^n}{n!}$.
+We need to find out the $\xi $ in $[0,n]$ such that $f[0,1,\dots,n] = \cfrac{f^{(n)}(\xi)}{n!}$.
+Since $f(x) = e^x$, we have $f^{(n)}(x) = e^x$. Therefore, we have $e^{\xi} = (e-1)^n$.
+Do \textit{log} on both sides, we have 
+\[
+\xi = n\ln(e-1)
+\].
+
+Roughly, we can calculate that $\ln(e-1) \approx 0.541 > 0.5$.
+
+Therefore, $\xi > \cfrac{1}{2} n$, in other words, located to the\textbf{ right side of the midpoint}.
+
+\section*{IV. }
+\subsection*{IV-a}
+Constructing the table below:
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.3\textwidth]{IV-a.jpg}
+  \caption{table of divided differences}
+  \label{fig:IV}
+\end{figure}
+So we have
+\[
+p_3(f;x) = 5 - 2x + x(x-1) + 0.25x(x-1)(x-2) = 0.25x^3 + 0.25x^2 - 2.5x + 5
+\]
+
+\subsection*{IV-b}
+We have the approximate derivative of $f(x)$:
+
+\[
+f'(x) \approx p_3'(f;x) = 0.75x^2 + 0.5x - 2.5 = 0.25(3x^2 + 2x - 10)
+\]
+Let $p_3'(f;x) = 0$, we have $x = \cfrac{-1 \pm \sqrt{31}}{3}$. Only $x = \cfrac{-1 + \sqrt{31}}{3} \approx 1.523$ is in the interval $(1,3)$.
+\[
+\therefore \hat{x}_{min} = 1.523
+\]
+
+\section*{V. }
+\subsection*{V-a}
+For $f(x) = x^7$, we have $f'(x) = 7x^6$, $f''(x) = 42x^5$,
+Constructing the table below:
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.35\textwidth]{V-a.jpg}
+  \caption{table of divided differences}
+  \label{fig:V-a}
+\end{figure}
+\[
+\therefore f[0,1,1,1,2,2] = 51
+\]
+
+\subsection*{V-b}
+According to \textbf{Theorem 2.22}, we have $f[x_0,x_1 \dots x_n] = \cfrac{1}{n!}f^{(n)}(\xi)$.
+Here $n = 5$, so we have
+\[
+f[x_0,x_1,x_2,x_3,x_4,x_5] = f[0,1,1,1,2,2] =
+\cfrac{1}{5!}f^{(5)}(\xi) = 51
+\]
+For $f(x) = x^7$, we have $f^{(5)}(x) = 2520x^2$.
+So we have 
+\[
+\cfrac{1}{5!}f^{(5)}(\xi) = 21{\xi}^2 = 51
+\]
+
+\[
+\therefore \xi = \sqrt{\cfrac{17}{7}} \approx 1.558 \in (0,2)
+\]
+
+\section*{VI. }
+\subsection*{VI-a}  
+Based on Hermite interpolation rules, constructing the table below:
+\begin{figure}
+  \centering
+  \includegraphics[width=0.4\textwidth]{VI-a.jpg}
+  \caption{table of divided differences}
+  \label{fig:VI-a}
+\end{figure}
+So we have
+\begin{align*}
+f(x) &\approx p(f;x) = 1 + x - 2x(x-1) + \cfrac{2}{3}x(x-1)^2 - \cfrac{5}{36}x(x-1)^2(x-3)\\
+&= 1 + x(1+(x-1)(-2 + (x-1)(\cfrac{2}{3} - \cfrac{5}{36}(x-3))))\\
+\end{align*}
+\[
+\therefore f(2) \approx \cfrac{11}{18} \approx 0.6111
+\]
+
+\subsection*{VI-b}
+According to \textbf{Theorem 2.7}, we have $R_n(f;x) = \cfrac{f^{(n+1)}(\xi)}{(n+1)!}\Pi^n_{i=0}(x-x_i)$.
+\[
+\therefore R_4(f;x) = \cfrac{f^{(5)}(\xi)}{5!}\Pi^4_{i=0}(x-x_i),\quad \xi \in (0,3)
+\]
+
+\[
+\because  |f^(5)(x)| \leq M, \quad x \in [0,3]
+\]
+
+\[
+\therefore |R_4(f;x)| \leq \cfrac{M}{5!}|x(x-1)^2(x-3)|, \quad x \in [0,3]
+\]
+Now, we have to find out the maximum of $|x(x-1)^2(x-3)|$ in $[0,3]$. The shape of the curve is shown in figure \ref{fig:VI-b}.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{VI-b.png}
+  \caption{Curve of $y = x(x-1)^2(x-3)$}
+  \label{fig:VI-b}
+\end{figure}
+
+By observation, we can see that the maximum is roughly located at $x = 2.4$.
+For $y = x(x-1)^2(x-3) = x^4 - 5x^3 + 7x^2 -3x$, we have $y' = 4x^3 - 15x^2 + 14x - 3$.
+Use \textbf{Newton's method} in the 1st programming homework to find out the root of $y' = 0$:
+\begin{lstlisting}
+    NewtonSolver(Function &F) : F(F) {}
+    double solve(double x0)
+    {
+        int M = 5;
+        double x = x0;
+        int k = 0;
+        for (; k < M; k++)
+        {
+            double u = F(x);
+            x -= u / (F.d(x));
+        }
+        return x;
+    }
+
+class Func1 : public Function
+{
+public:
+    double operator()(double x)
+    {
+        return 4*pow(x,3) -15*pow(x,2) + 14*x - 3;
+    }
+    double d(double x)
+    {
+        return 12*pow(x,2) - 30*x + 14;
+    }
+};
+
+int main()
+{
+    Func1 func;
+    NewtonSolver solver(func);
+    double x = solver.solve(2.4);
+    cout << x << endl;
+    return 0;
+}
+\end{lstlisting}
+After running the code, we get $x = 2.443$.
+\[
+\therefore |x(x-1)^2(x-3)| \leq 2.8334,\quad x \in [0,3]
+\]
+\begin{align*}
+  \therefore |R_4(f;x)| &\leq \cfrac{2.8334M}{120} = 0.02361M, \quad x \in [0,3]
+\end{align*}
+the maximum possible error 
+\begin{align*}
+  \epsilon &= 0.02361M
+\end{align*}  
+
+\newpage
+\section*{VII. }
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{VII.jpg}
+  \caption{Problem VII}
+  \label{fig:VII}
+\end{figure}
+
+\section*{VIII. }
+The definition of partial derivative is:
+\[
+\cfrac{\partial f}{\partial x_i} = \lim_{h \to 0}\cfrac{f(x_1, x_2, \dots, x_i + h, \dots, x_n) - f(x_1, x_2, \dots, x_i, \dots, x_n)}{h}
+\]
+According to it, viewing $x_o$ as a variable,
+\[
+\therefore \cfrac{\partial }{\partial x_0}f[x_0, x_1, \dots, x_n] = \lim_{h \to 0}\cfrac{1}{h}[f(x_0 + h, x_1, \dots, x_n) - f(x_0, x_1, \dots, x_n)]
+\]
+Based on the definition of divided difference, we have
+\[
+\cfrac{\partial }{\partial x_0}f[x_0, x_1, \dots, x_n] = f[x_0, x_0, x_1, \dots, x_n]
+\]
+
+\section*{IX. }
+According to \textbf{Theorem 2.47}, the Chebyshev polynomial has the smallest maximum norm on $[-1,1]$ among polynomials of degree $n$.
+namely,
+\[
+\max_{-1 \leq x \leq 1}|\cfrac{T_n(x)}{2^{n-1}}| \leq \max_{-1 \leq x \leq 1}|p(x)|
+\]
+
+Now, we want to find the similar polynomial $a_0x^n + a_1x^{n-1} + \dots + a_n$ on $[a,b]$.
+So we need to transform $x \in [a,b]$ to $t \in [-1,1]$: 
+\[
+t = \cfrac{b-a}{2}x + \cfrac{a+b}{2}
+\]
+when $x = -1$, we have $t = a$; and when $x = 1$, we have $t = b$.
+\[
+\therefore x = \cfrac{2t-a-b}{b-a}
+\]
+Therefore, we have the wanted polynomial on $x \in [a,b]$:
+\[
+a_0x^n + a_1x^{n-1} + \dots + a_n = a_0 \cfrac{T_n(\cfrac{2x-a-b}{b-a})}{2^{n-1}}
+\]
+Just sort out the coefficients of $x^n, x^{n-1}, \dots, x^0$ and can simply get $a_0, a_1, \dots, a_n$.
+
+\section*{X. }
+We need to prove that
+\[
+\max_{-1 \leq x \leq 1}|\cfrac{T_n(x)}{T_n(a)}| \leq \max_{-1 \leq x \leq 1}|p(x)|
+\]
+Proof by contradiction: Suppose that
+\[
+\exists p \in \mathbb{P}^{a}_n\quad s.t. \quad |\cfrac{T_n(x)}{T_n(a)}| > \max_{-1 \leq x \leq 1}|p(x)|
+\]
+and 
+\[
+\because |T_n(x)| \leq 1, \quad x \in [-1,1],
+\]
+therefore, we only need 
+\begin{equation}
+  \label{eq:*}
+  \exists p \in \mathbb{P}^{a}_n,\quad s.t. \quad |\cfrac{1}{T_n(a)}| > \max_{-1 \leq x \leq 1}|p(x)|.
+\end{equation}
+Construct a new polynomial $Q(x) = T_n(x) - T_n(a)p(x)$, whose degree is at most $n$.
+
+Since $T_n(x)$ has $n+1$ extremal points in $[-1,1]$, denoted as $x^{'}_0, x^{'}_1, \dots, x^{'}_n$, and at these points $|T_n(x_i)| = 1$.
+
+So we have 
+\[
+Q(x^{'}_k) = T_n(x^{'}_k) - T_n(a)p(x^{'}_k) = (-1)^k - T_n(a)p(x^{'}_k), \quad k = 0,1,\dots,n.
+\]
+When the $k$ is even, due to \textbf{inequality \ref{eq:*}} we have $Q(x^{'}_k) = 1 - T_n(a)p(x^{'}_k) > 0$; when the $k$ is odd, we have $Q(x^{'}_k) = -1 - T_n(a)p(x^{'}_k) < 0$.
+
+Since there are $n+1$ extrema, $Q(x)$ has at least $n$ zeros in $[-1,1]$.
+While $p \in \mathbb{P}^{a}_n$, so $Q(a) = T_n(a) - T_n(a)p(a) = 1-1 = 0$.
+In total, $Q(x)$ has at least $n+1$ zeros in $[-1,1]$, and the degree of $Q(x)$ is at most $n$.
+Therefore, $Q(x) \equiv 0$, namely $\cfrac{T_n(x)}{T_n(a)} \equiv p(x)$, which is contradictory to \textbf{inequality \ref{eq:*}}.
+
+\section*{XI.}
+The Bernstein base polynomial is defined as 
+\[
+b^{n}_k(t) = \binom{n}{k}t^k(1-t)^{n-k}, \quad k = 0,1,\dots,n.
+\]
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\textwidth]{XI.jpg}
+  \caption{Problem XI}
+  \label{fig:XI}
+\end{figure}
+The Conbinatorial number $\binom{n}{k}$ has the property that $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$.
+Based on this property, we have: 
+
+\section*{XII.}
+The Bernstein base polynomial is defined as 
+\[
+b^{n}_k(t) = \binom{n}{k}t^k(1-t)^{n-k}, \quad k = 0,1,\dots,n.
+\]
+\[
+\therefore \int_{0}^{1} b^{n}_k(t) \,dt = \binom{n}{k} \int_{0}^{1} t^k(1-t)^{n-k} \,dt
+\]
+According to the definition of Beta function, we have
+\[
+B(p,q) = \int_{0}^{1} t^{p-1}(1-t)^{q-1} \,dt
+\]
+Let $p = k+1, \quad q = n-k+1$. And Beta function has the property that
+\[
+B(p,q) = \cfrac{\Gamma(p)\Gamma(q)}{\Gamma(p+q)}
+\]
+For $k \in \mathbb{Z}, \quad \Gamma(k) = (k-1)!$.
+\[
+\therefore \int_{0}^{1} b^{n}_k(t) \,dt = \binom{n}{k} \cfrac{\Gamma(k+1)\Gamma(n-k+1)}{\Gamma(n+2)} = \binom{n}{k} \cfrac{k!(n-k)!}{(n+1)!} = \cfrac{1}{n+1}
+\]
+
+\end{document}
